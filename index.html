@@ -204,25 +204,25 @@
                     <form id="form">
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <input type="text" id="from_name" name="from_name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Your Email</label>
-                            <input type="email" id="email" class="form-control" required>
+                            <input type="email" id="email_id" name="email_id" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
+                            <input type="text" id="to_name" name="to_name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="message">Your Message</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
                         
-                        <button type="submit" class="submit-btn">Send Message</button>
+                        <button type="submit" onclick="click()" class="submit-btn">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -276,8 +276,13 @@
             <button class="btn btn-primary modal-ok">OK</button>
         </div>
     </div>
-
     <!-- JavaScript -->
     <script src="index.js"></script>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
+  <script type="text/javascript">
+    emailjs.init('A_WfTHegWb0C6gwr_')
+  </script>
 </body>
 </html>
