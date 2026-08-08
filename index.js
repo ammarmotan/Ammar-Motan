@@ -1,5 +1,5 @@
         // Initialize EmailJS
-        emailjs.init('A_WfTHegWb0C6gwr_');
+        emailjs.init('Z-zButz63hvzlTv7_');
 
         // Mobile Navigation
         const hamburger = document.querySelector('.hamburger');

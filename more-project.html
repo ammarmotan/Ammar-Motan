@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects · Ammar Motan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ----- RESET & VARIABLES (same tokens as homepage) ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep: #0a0d14;
+      --bg-surface: #121924;
+      --bg-card: #1a2335;
+      --bg-elevated: #232f45;
+      --text-primary: #f0f4ff;
+      --text-secondary: #a5b9d9;
+      --text-muted: #6c7e9e;
+      --gold: #e7b84c;
+      --gold-glow: rgba(231, 184, 76, 0.25);
+      --gold-dim: rgba(231, 184, 76, 0.08);
+      --border-gold: rgba(231, 184, 76, 0.20);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-gold: 0 20px 40px -12px rgba(231, 184, 76, 0.15);
+      --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+    .glass {
+      background: rgba(18, 25, 36, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-gold);
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold-dim); border: 1px solid var(--border-gold);
+      padding: 0.3rem 1.2rem; border-radius: 60px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--gold);
+    }
+
+    .section-head { margin-bottom: 3rem; }
+    .section-head .badge { margin-bottom: 1rem; }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 600; letter-spacing: -0.02em; line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-desc { font-size: 1.15rem; color: var(--text-secondary); max-width: 560px; }
+    .gold-text { color: var(--gold); }
+
+    /* ----- BUTTONS ----- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2.4rem; border-radius: 60px; font-weight: 600;
+      font-size: 0.95rem; border: none; cursor: pointer;
+      transition: var(--transition); background: transparent; color: #fff;
+    }
+    .btn-primary { background: var(--gold); color: #0a0d14; box-shadow: 0 12px 28px -8px var(--gold-glow); }
+    .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -8px var(--gold-glow); }
+    .btn-outline { border: 1.5px solid var(--border-gold); color: var(--text-primary); }
+    .btn-outline:hover { background: var(--gold-dim); border-color: var(--gold); transform: translateY(-4px); }
+    .btn-sm { padding: 0.6rem 1.5rem; font-size: 0.85rem; }
+
+    /* ----- HEADER (NAV) — unchanged from homepage ----- */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 1.2rem 0; transition: var(--transition);
+    }
+    header.scrolled {
+      background: rgba(10, 13, 20, 0.9);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 0;
+    }
+    .navbar { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 600; letter-spacing: -0.5px; }
+    .logo span { color: var(--gold); font-weight: 300; }
+    .nav-links { display: flex; gap: 2.8rem; align-items: center; }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);
+      transition: var(--transition); position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: var(--transition);
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .hamburger { display: none; font-size: 1.8rem; background: none; border: none; color: var(--text-primary); cursor: pointer; }
+
+    /* ----- PAGE HERO (styled like homepage section-heads) ----- */
+    .page-hero { padding: 10rem 0 2rem; position: relative; overflow: hidden; }
+    .page-hero::before {
+      content: ''; position: absolute; width: 700px; height: 700px;
+      right: -15%; top: -40%;
+      background: radial-gradient(circle, rgba(231, 184, 76, 0.06) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--text-muted); font-size: 0.85rem; margin-top: 0.4rem;
+      transition: var(--transition);
+    }
+    .back-link:hover { color: var(--gold); }
+
+    /* ----- INDEX FILTER (text tabs, same underline language as nav) ----- */
+    .index-filter {
+      display: flex; flex-wrap: wrap; gap: 0 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .index-filter button {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.4rem 0; position: relative;
+      transition: var(--transition);
+    }
+    .index-filter button::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: var(--transition);
+    }
+    .index-filter button:hover { color: var(--text-primary); }
+    .index-filter button.active { color: var(--gold); }
+    .index-filter button.active::after { width: 100%; }
+
+    /* ----- PROJECT INDEX (signature element) ----- */
+    .project-index { border-top: 1px solid var(--border-gold); margin-top: 1rem; }
+    .index-row {
+      display: flex; align-items: baseline; gap: 1.6rem;
+      padding: 1.9rem 0.4rem; border-bottom: 1px solid var(--border-gold);
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: var(--transition);
+    }
+    .index-row::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold-dim);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 0;
+    }
+    .index-row:hover::before { transform: scaleX(1); }
+    .index-row.hidden { display: none; }
+
+    .index-num {
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;
+      color: var(--text-muted); width: 34px; flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .index-main { flex: 1; min-width: 0; position: relative; z-index: 1; }
+    .index-title-row { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+    .index-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      transition: var(--transition), transform 0.4s ease;
+      display: inline-block;
+    }
+    .index-row:hover .index-title { color: var(--gold); transform: translateX(10px); }
+    .index-status {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 0.2rem 0.7rem; border-radius: 60px; border: 1px solid var(--border-gold);
+      color: var(--text-muted); flex-shrink: 0;
+    }
+    .index-status.live { color: #7ed08a; border-color: rgba(126,208,138,0.3); }
+    .index-status.wip { color: var(--gold); }
+    .index-sub {
+      font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.4rem;
+      max-width: 560px; transition: var(--transition), transform 0.4s ease;
+    }
+    .index-row:hover .index-sub { transform: translateX(10px); }
+
+    .index-meta {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .index-cat { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .index-arrow {
+      color: var(--text-muted); transition: var(--transition);
+      font-size: 1rem;
+    }
+    .index-row:hover .index-arrow { color: var(--gold); transform: rotate(45deg) translate(2px, -2px); }
+
+    /* floating cursor preview (desktop only) */
+    .float-preview {
+      position: fixed; top: 0; left: 0; width: 220px; height: 150px;
+      border-radius: var(--radius-md); overflow: hidden;
+      border: 1px solid var(--border-gold);
+      box-shadow: var(--shadow-gold);
+      pointer-events: none; z-index: 900;
+      opacity: 0; transform: translate(-50%, -50%) scale(0.9) rotate(-3deg);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .float-preview.active { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-3deg); }
+    .float-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+    @media (hover: none), (pointer: coarse) {
+      .float-preview { display: none; }
+    }
+
+    /* expandable detail panel */
+    .index-detail {
+      max-height: 0; overflow: hidden; transition: max-height 0.5s ease;
+    }
+    .index-detail-inner {
+      display: grid; grid-template-columns: 200px 1fr; gap: 2rem;
+      padding: 0.4rem 0.4rem 2.2rem;
+    }
+    .index-thumb {
+      border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-gold);
+      aspect-ratio: 4/3;
+    }
+    .index-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .index-detail p { color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.95rem; }
+    .index-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.4rem; }
+    .index-tags span {
+      background: var(--gold-dim); border: 1px solid var(--border-gold);
+      padding: 0.3rem 1rem; border-radius: 60px; font-size: 0.75rem;
+      font-weight: 500; color: var(--text-secondary);
+    }
+    .index-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .index-detail-inner { grid-template-columns: 1fr; }
+      .index-thumb { max-width: 220px; }
+    }
+
+    /* ----- FOOTER — unchanged from homepage ----- */
+    footer { border-top: 1px solid var(--border-gold); padding: 3rem 0 2rem; margin-top: 3rem; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 1.8rem; text-align: center; }
+    .footer-socials { display: flex; gap: 1.8rem; }
+    .footer-socials a {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--gold-dim); border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); transition: var(--transition); font-size: 1.2rem;
+    }
+    .footer-socials a:hover { background: var(--gold); color: #0a0d14; transform: translateY(-4px); }
+    .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
+
+    /* ----- BACK TO TOP — unchanged ----- */
+    .back-top {
+      position: fixed; bottom: 2.5rem; right: 2.5rem;
+      width: 54px; height: 54px; background: var(--gold); color: #0a0d14;
+      border: none; border-radius: 50%; font-size: 1.4rem; cursor: pointer;
+      opacity: 0; visibility: hidden; transition: var(--transition);
+      box-shadow: 0 8px 24px var(--gold-glow); z-index: 999;
+    }
+    .back-top.active { opacity: 1; visibility: visible; }
+    .back-top:hover { transform: translateY(-4px) scale(1.05); }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+        background: var(--bg-surface); flex-direction: column; justify-content: center;
+        gap: 2.5rem; transition: var(--transition);
+        box-shadow: -8px 0 30px rgba(0, 0, 0, 0.6); padding: 2rem;
+      }
+      .nav-links.open { right: 0; }
+      .hamburger { display: block; z-index: 1001; }
+      section { padding: 4rem 0; }
+      .page-hero { padding-top: 7.5rem; }
+      .index-row { flex-wrap: wrap; }
+      .index-meta { flex-direction: row; align-items: center; gap: 0.8rem; margin-top: 0.6rem; }
+      .index-status { order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">AMMAR<span>MOTAN</span></a>
+        <div class="nav-links" id="navLinks">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#services">Services</a>
+          <a href="moreproject.html" class="active">Portfolio</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="section-head reveal" style="margin-bottom: 1.5rem;">
+        <span class="badge"><i class="fas fa-folder"></i> portfolio</span>
+        <h1 class="section-title">Every project, <span class="gold-text">indexed</span>.</h1>
+        <p class="section-desc">Hover a title for a quick look. Click to open the full brief, tech stack, and links.</p>
+      </div>
+      <a href="index.html#home" class="back-link"><i class="fas fa-arrow-left"></i> Back to home</a>
+    </div>
+  </section>
+
+  <!-- FILTER -->
+  <div class="container">
+    <div class="index-filter reveal" id="indexFilter">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="web">Web Apps</button>
+      <button data-filter="ai">AI Agents</button>
+      <button data-filter="automation">Automation</button>
+      <button data-filter="api">APIs</button>
+    </div>
+
+    <!-- PROJECT INDEX -->
+    <div class="project-index reveal" id="projectIndex">
+
+      <div class="index-row" data-cat="web" data-idx="0" data-img="images/Salon ss.PNG">
+        <span class="index-num">01</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Salon Management System</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Booking site with an admin panel for services, staff and clients.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+            <div class="index-detail" id="detail-0">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="images/Salon ss.PNG" alt="Salon website and management system" /></div>
+          <div>
+            <p>Booking-ready salon site with an admin panel for services, staff schedules, and client records. Built with vanilla JS and a clean, modern UI on top of this same design system.</p>
+            <div class="index-tags"><span>JavaScript</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="index-links">
+              <a href="https://ammarmotan.github.io/festival/home.html" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="index-row" data-cat="web" data-idx="0" data-img="images/Salon ss.PNG">
+        <span class="index-num">01</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Salon Management System</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Booking site with an admin panel for services, staff and clients.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-0">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="images/Salon ss.PNG" alt="Salon website and management system" /></div>
+          <div>
+            <p>Booking-ready salon site with an admin panel for services, staff schedules, and client records. Built with vanilla JS and a clean, modern UI on top of this same design system.</p>
+            <div class="index-tags"><span>JavaScript</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="index-links">
+              <a href="https://ammarmotan.github.io/festival/home.html" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="index-row" data-cat="web" data-idx="0" data-img="images/Salon ss.PNG">
+        <span class="index-num">01</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Salon Management System</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Booking site with an admin panel for services, staff and clients.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-0">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="images/Salon ss.PNG" alt="Salon website and management system" /></div>
+          <div>
+            <p>Booking-ready salon site with an admin panel for services, staff schedules, and client records. Built with vanilla JS and a clean, modern UI on top of this same design system.</p>
+            <div class="index-tags"><span>JavaScript</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="index-links">
+              <a href="https://ammarmotan.github.io/festival/home.html" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="index-row" data-cat="web" data-idx="0" data-img="images/Salon ss.PNG">
+        <span class="index-num">01</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Salon Management System</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Booking site with an admin panel for services, staff and clients.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-0">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="images/Salon ss.PNG" alt="Salon website and management system" /></div>
+          <div>
+            <p>Booking-ready salon site with an admin panel for services, staff schedules, and client records. Built with vanilla JS and a clean, modern UI on top of this same design system.</p>
+            <div class="index-tags"><span>JavaScript</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="index-links">
+              <a href="https://ammarmotan.github.io/festival/home.html" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="index-row" data-cat="web" data-idx="0" data-img="images/Salon ss.PNG">
+        <span class="index-num">01</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Salon Management System</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Booking site with an admin panel for services, staff and clients.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-0">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="images/Salon ss.PNG" alt="Salon website and management system" /></div>
+          <div>
+            <p>Booking-ready salon site with an admin panel for services, staff schedules, and client records. Built with vanilla JS and a clean, modern UI on top of this same design system.</p>
+            <div class="index-tags"><span>JavaScript</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="index-links">
+              <a href="https://ammarmotan.github.io/festival/home.html" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="index-row" data-cat="ai automation" data-idx="1" data-img="https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">
+        <span class="index-num">02</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">AI Voice Booking Agent</span>
+            <span class="index-status wip">In progress</span>
+          </div>
+          <p class="index-sub">Phone agent that answers calls and books appointments live.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">AI / Automation</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-1">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="AI voice booking agent" /></div>
+          <div>
+            <p>A conversational AI phone agent that answers calls, checks availability against a live calendar, and books appointments — no human needed on the line for routine requests.</p>
+            <div class="index-tags"><span>AI Voice</span><span>Automation</span><span>API Integration</span></div>
+            <div class="index-links">
+              <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Case study</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      <div class="index-row" data-cat="web api" data-idx="3" data-img="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">
+        <span class="index-num">04</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">E-commerce Storefront</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">Catalog, cart, orders and a lightweight inventory system.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Web / API</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-3">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="E-commerce storefront" /></div>
+          <div>
+            <p>Full storefront and admin dashboard built on Laravel and MySQL — product catalog, cart, orders, and a lightweight inventory system that keeps stock in sync.</p>
+            <div class="index-tags"><span>Laravel</span><span>MySQL</span><span>PHP</span></div>
+            <div class="index-links">
+              <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Live demo</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="index-row" data-cat="automation" data-idx="4" data-img="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">
+        <span class="index-num">05</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Business Automation Dashboard</span>
+            <span class="index-status wip">Internal tool</span>
+          </div>
+          <p class="index-sub">Forms, CRM and email tied into one automated workflow.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">Automation</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-4">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Business automation workflow dashboard" /></div>
+          <div>
+            <p>Connects a client's forms, CRM, and email into one automated workflow — leads get routed, tagged, and followed up on without anyone copy-pasting between tabs.</p>
+            <div class="index-tags"><span>Automation</span><span>API Integration</span><span>Node.js</span></div>
+            <div class="index-links">
+              <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Case study</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      <div class="index-row" data-cat="api" data-idx="6" data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">
+        <span class="index-num">07</span>
+        <div class="index-main">
+          <div class="index-title-row">
+            <span class="index-title">Inventory Management API</span>
+            <span class="index-status live">Live</span>
+          </div>
+          <p class="index-sub">REST API tracking stock across multiple warehouses.</p>
+        </div>
+        <div class="index-meta">
+          <span class="index-cat">API</span>
+          <i class="fas fa-arrow-up-right-from-square index-arrow"></i>
+        </div>
+      </div>
+      <div class="index-detail" id="detail-6">
+        <div class="index-detail-inner">
+          <div class="index-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Inventory management API" /></div>
+          <div>
+            <p>A REST API for tracking stock across multiple warehouses, with webhook alerts when items run low — built to plug into any front end you throw at it.</p>
+            <div class="index-tags"><span>Node.js</span><span>API Integration</span><span>REST</span></div>
+            <div class="index-links">
+              <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Docs</a>
+              <a href="https://github.com/ammarmotan" target="_blank" class="btn btn-outline btn-sm"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div style="height: 5rem;"></div>
+
+  <!-- floating cursor preview -->
+  <div class="float-preview" id="floatPreview"><img id="floatPreviewImg" src="" alt="" /></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+          <a href="index.html#home" style="color: var(--text-secondary);">Home</a>
+          <a href="index.html#about" style="color: var(--text-secondary);">About</a>
+          <a href="index.html#services" style="color: var(--text-secondary);">Services</a>
+          <a href="moreproject.html" style="color: var(--text-secondary);">Portfolio</a>
+          <a href="index.html#contact" style="color: var(--text-secondary);">Contact</a>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/ammar-motan/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/ammarmotan" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="footer-copy">© 2025 Ammar Motan — crafted with <i class="fas fa-heart" style="color: var(--gold);"></i></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-top" id="backTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    (function() {
+      const header = document.getElementById('header');
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      const backTop = document.getElementById('backTop');
+      const filterBtns = document.querySelectorAll('.index-filter button');
+      const rows = document.querySelectorAll('.index-row');
+      const floatPreview = document.getElementById('floatPreview');
+      const floatPreviewImg = document.getElementById('floatPreviewImg');
+      const projectIndex = document.getElementById('projectIndex');
+
+      // ----- mobile nav -----
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        hamburger.innerHTML = navLinks.classList.contains('open') ?
+          '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      });
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+      });
+
+      // ----- scroll effects -----
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        header.classList.toggle('scrolled', y > 40);
+        backTop.classList.toggle('active', y > 400);
+      });
+      backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ----- filtering -----
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+
+          rows.forEach(row => {
+            const cats = row.dataset.cat.split(' ');
+            const match = filter === 'all' || cats.includes(filter);
+            row.classList.toggle('hidden', !match);
+            const detail = document.getElementById('detail-' + row.dataset.idx);
+            if (!match) {
+              row.classList.remove('open');
+              detail.style.maxHeight = null;
+            }
+          });
+        });
+      });
+
+      // ----- accordion expand -----
+      rows.forEach(row => {
+        row.addEventListener('click', () => {
+          const detail = document.getElementById('detail-' + row.dataset.idx);
+          const isOpen = row.classList.contains('open');
+          row.classList.toggle('open', !isOpen);
+          detail.style.maxHeight = isOpen ? null : detail.scrollHeight + 'px';
+        });
+      });
+
+      // ----- floating cursor preview (desktop only) -----
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        rows.forEach(row => {
+          row.addEventListener('mouseenter', () => {
+            floatPreviewImg.src = row.dataset.img;
+            floatPreview.classList.add('active');
+          });
+          row.addEventListener('mouseleave', () => {
+            floatPreview.classList.remove('active');
+          });
+        });
+        projectIndex.addEventListener('mousemove', (e) => {
+          floatPreview.style.left = e.clientX + 'px';
+          floatPreview.style.top = e.clientY + 'px';
+        });
+      }
+
+      // ----- reveal on scroll -----
+      const revealEls = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      revealEls.forEach(el => observer.observe(el));
+      setTimeout(() => {
+        revealEls.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); });
+      }, 150);
+    })();
+  </script>
+</body>
+</html>
